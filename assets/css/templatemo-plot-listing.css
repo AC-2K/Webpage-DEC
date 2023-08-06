@@ -233,7 +233,7 @@ header
 */
 
 .background-header {
-  background-color: #fff!important;
+  background-color: #0b0a0a!important;
   height: 80px!important;
   position: fixed!important;
   top: 0px;
@@ -244,20 +244,20 @@ header
 
 .background-header .logo,
 .background-header .main-nav .nav li a {
-  color: #1e1e1e!important;
+  color: #ffffff!important;
 }
 
 .background-header .main-nav .nav li:hover a {
-  color: #8d99af!important;
+  color: #ffffff!important;
 }
 
 .background-header .nav li a.active {
-  color: #8d99af!important;
+  color: #ffffff!important;
 }
 
 .header-area {
-  background-color: transparent;
-  border-bottom: 1px solid rgba(250,250,250,0.2);
+  background-color: #060606;
+  border-bottom: 1px solid rgba(7, 7, 7, 0.2);
   position: fixed;
   top: 0px;
   left: 0px;
@@ -320,7 +320,7 @@ header
 
 .header-area .main-nav .nav li:last-child a ,
 .background-header .main-nav .nav li:last-child a {
-  color: #2a2a2a !important;
+  color: #c32c2c !important;
   text-transform: capitalize;
   padding: 0px 20px;
   font-weight: 400;
@@ -333,13 +333,13 @@ header
 }
 
 .background-header .main-nav .nav li:last-child .main-white-button a {
-  background-color: #8d99af;
+  background-color: #f5f9ff;
   color: #fff !important;
 }
 
 .background-header .main-nav .nav li:last-child .main-white-button a i {
   background-color: #fff;
-  color: #8d99af;
+  color: #ffffff;
 }
 
 .header-area .main-nav .nav li:last-child a:hover,
@@ -577,7 +577,7 @@ header
 }
 
 .header-area.header-sticky .nav li a.active {
-  color: #8d99af;
+  color: #0e0f0f;
 }
 
 @media (max-width: 1200px) {
@@ -946,7 +946,9 @@ Popular Categories
 }
 
 .popular-categories .nacc .thumb .left-text {
-  margin-left: 30px;
+  align-items: center;
+  justify-content: left;
+  text-align: justify;
 }
 
 .popular-categories .nacc .thumb .left-text h4 {
@@ -985,15 +987,16 @@ Recent Listing
 */
 
 .recent-listing {
-  margin-top: 120px;
-  padding-top: 120px;
-  margin-bottom: 120px;
+  margin-top: 20px;
+  padding-top: 20px;
+  margin-bottom: 20px;
   border-top: 1px solid #eee;
 }
 
 .recent-listing .section-heading {
   text-align: center;
-  margin-bottom: 80px;
+  margin-bottom: 20px;
+  margin-top: 50px;
 }
 
 .recent-listing .item .listing-item {
@@ -1002,7 +1005,7 @@ Recent Listing
   border-radius: 7px;
   width: 100%;
   position: relative;
-  margin-bottom: 30px;
+  margin-bottom: 10px;
 }
 
 .recent-listing .item .left-image {

@@ -1,73 +1,87 @@
 @import url(https://fonts.googleapis.com/css?family=Roboto:300,400);
 @import url(https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css);
-figure.snip1390 {
+.snip1533 {
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.15);
+  color: #9e9e9e;
+  display: inline-block;
   font-family: 'Roboto', Arial, sans-serif;
-  position: relative;
-  overflow: hidden;
-  margin: 10px;
-  min-width: 230px;
-  max-width: 315px;
-  width: 100%;
-  color: #000000;
-  text-align: center;
   font-size: 16px;
-  background-color: #a47e0b;
-  padding: 30px;
-  background-image: linear-gradient(-25deg, rgba(0, 0, 0, 0.2) 0%, rgba(255, 255, 255, 0.1) 100%);
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-}
-figure.snip1390 *,
-figure.snip1390 *:before,
-figure.snip1390 *:after {
-  -webkit-box-sizing: border-box;
-  box-sizing: border-box;
-  -webkit-transition: all 0.35s ease;
-  transition: all 0.35s ease;
-}
-figure.snip1390 figcaption {
+  margin: 35px 10px 10px;
+  max-width: 310px;
+  min-width: 250px;
+  position: relative;
+  text-align: center;
   width: 100%;
-}
-figure.snip1390 h2,
-figure.snip1390 h4,
-figure.snip1390 blockquote {
-  margin: 0;
-}
-figure.snip1390 h2,
-figure.snip1390 h4 {
-  font-weight: 300;
-}
-figure.snip1390 h2 {
-  color: #ffffff;
-}
-figure.snip1390 h4 {
-  color: #ffffff;
-}
-figure.snip1390 blockquote {
-  font-size: 1em;
-  padding: 45px 20px 40px 50px;
-  margin-top: 30px;
   background-color: #ffffff;
   border-radius: 5px;
-  box-shadow: inset -1.4px -1.4px 2px rgba(0, 0, 0, 0.3);
-  text-align: left;
-  position: relative;
+  border-top: 5px solid #d2652d;
 }
-figure.snip1390 blockquote:before {
-  font-family: 'FontAwesome';
-  content: "\201C";
-  position: absolute;
-  font-size: 70px;
-  opacity: 0.25;
-  font-style: normal;
-  top: 0px;
-  left: 20px;
+
+.snip1533 *,
+.snip1533 *:before {
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  -webkit-transition: all 0.1s ease-out;
+  transition: all 0.1s ease-out;
 }
-figure.snip1390 .profile {
-  width: 100px;
+
+.snip1533 figcaption {
+  padding: 13% 10% 12%;
+}
+
+/* .snip1533 figcaption:before {
+  -webkit-transform: translateX(-50%);
+  transform: translateX(-50%);
+  background-color: #fff;
   border-radius: 50%;
-  display: inline-block;
-  box-shadow: 3px 3px 20px rgba(0, 0, 0, 0.4);
-  margin-bottom: 10px;
-  border: solid 5px #A6A57A;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.25);
+  color: #200e06;
+  content: "\f10e";
+  font-family: 'FontAwesome';
+  font-size: 32px;
+  font-style: normal;
+  left: 50%;
+  line-height: 60px;
+  position: absolute;
+  top: -30px;
+  width: 60px;
+} */
+
+.snip1533 h3 {
+  color: #3c3c3c;
+  font-size: 20px;
+  font-weight: 300;
+  line-height: 24px;
+  margin: 10px 0 5px;
+}
+
+.snip1533 h4 {
+  font-weight: 400;
+  margin: 0;
+  opacity: 0.5;
+}
+
+.snip1533 blockquote {
+  font-style: italic;
+  font-weight: 300;
+  margin: 0 0 20px;
+}
+
+
+.center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-top: 20px;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  
+}
+
+.spacing {
+  padding-right: 20px;
+  padding-left: 20px;
+  margin-left: 20px;
+  margin-right: 20px;
+  
 }
