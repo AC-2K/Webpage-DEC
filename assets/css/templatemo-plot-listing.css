@@ -272,7 +272,7 @@ header
 
 .header-area .main-nav {
   min-height: 80px;
-  background: transparent;
+  
 }
 
 .header-area .main-nav a.logo {
@@ -299,7 +299,6 @@ header
   float: right;
   margin-top: 30px;
   margin-right: 0px;
-  background-color: transparent;
   -webkit-transition: all 0.3s ease 0s;
   -moz-transition: all 0.3s ease 0s;
   -o-transition: all 0.3s ease 0s;
@@ -540,7 +539,6 @@ header
 .header-area .main-nav .menu-trigger.active span,
 .header-area .main-nav .menu-trigger.active span:before,
 .header-area .main-nav .menu-trigger.active span:after {
-  background-color: transparent;
   width: 100%;
 }
 
