@@ -7,29 +7,21 @@
     $user = $_POST['username'];
     $pass = $_POST['pass'];
 
-    $_SESSION["usuario"] = $user;
+    $hash = password_hash($pass, PASSWORD_DEFAULT);
+
       
-    $query = " SELECT * from user where `t.nome` ='". $user ."' and pass='".$pass."'";
+    $query = " SELECT * from user where `user_name` ='". $user ."' AND user_pass='".$hash."'";
     $result = $link->query($query);
           
         if (mysqli_num_rows($result) == 1) 
         {
-            echo '<script type="text/JavaScript"> alert("Bem vindo - Tecnico"); </script>';
-            header("Location: tecnicoPage.php");
+            header("Location: gestao.html");
         } 
         else 
         {
-            $query = "SELECT * FROM gestor WHERE nome = '". $user ."' AND password = '".$pass."' ";
-            $result = mysqli_query($link,$query);
-            if (mysqli_num_rows($result) == 1) 
-            {
-                echo '<script type="text/JavaScript"> alert("Bem vindo - Gestor"); </script>';
-                header("Location: mainPage.php");
-            }
-            else{
-                echo '<script type="text/JavaScript"> alert("Usuario invalido"); </script>';
-                header("Location: auth-signin.html");
-            }
+
+            header("Location: auth.html");
+            
         }
 
 ?>

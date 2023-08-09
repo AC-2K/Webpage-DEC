@@ -92,6 +92,7 @@ function scrollFunction() {
     mybutton.style.display = "none";
   }
 }
+
 function whatsApp() {
   location.replace("https://wa.me/258848100497");
 }

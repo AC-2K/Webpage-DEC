@@ -720,10 +720,10 @@ Banner Style
 
 .main-banner {
   background-repeat: no-repeat;
-  background-position: center center;
+  background-position:  center;
   background-size: cover;
-  background-image: url(../images/Logo.png);
-  padding: 200px 0px 180px 0px;
+  background-image: url(../images/banner-bg.jpg);
+  padding: 450px 0px 10px 0px;
   position: relative;
   overflow: hidden;
 }
@@ -1156,7 +1156,7 @@ footer a {
 }
 
 footer .logo img {
-  max-width: 163px;
+  max-width: 400px;
   margin-bottom: 30px;
 }
 
@@ -1345,7 +1345,7 @@ Page Heading
   background-position: center center;
   background-size: cover;
   background-image: url(../images/heading-bg.jpg);
-  padding: 230px 0px 120px 0px;
+  padding: 450px 0px 10px 0px;
   position: relative;
   overflow: hidden;
 }
