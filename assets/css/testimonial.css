@@ -67,7 +67,7 @@
   margin: 0 0 20px;
 }
 
-
+/* Conjunto de funcoes para nao atrapalhar os designs principais */
 .center {
   display: flex;
   justify-content: center;
