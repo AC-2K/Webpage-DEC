@@ -69,12 +69,13 @@
                     <div class="inner-content">
                         <div class="row">
                             <div class="col-lg-6 align-self-center">
-                                <form action="php/DB.php" method="post">
+                                <form id="contact" action="DB.php" method="post" enctype="multipart/form-data" >
                                     <div class="row">
                                         <div class="col-lg-12">
                                             <fieldset>
-                                                <label for="nome">Nome</label>
-                                                <input type="name" name="nome"  required>
+                                                <label for="nome" >Nome</label>
+                                                <input type="name" name="nome"  class="form-control" required>
+                                                <hr>
                                             </fieldset>
                                         </div>
                                         <div class="col-lg-12">
@@ -87,6 +88,7 @@
                                                     <option>Alvenaria</option>
                                                     <option>Alvenaria</option>
                                                 </select>
+                                                <hr>
                                             </fieldset>
                                             <br>
                                         </div>
@@ -99,50 +101,57 @@
                                                     <option>Modificado</option>
                                                     <option>Exclusivo</option>
                                                 </select>
+                                                <hr>
                                             </fieldset>
                                             <br>
                                         </div>
                                         <div class="col-lg-12">
                                             <fieldset>
                                                 <label for="tamanho">Tamanho</label>
-                                                <input type="text" name="tamanho" required>
+                                                <input type="text" name="tamanho" class="form-control" required>
+                                                <hr>
                                             </fieldset>
                                         </div>
                                         <div class="col-lg-12">
                                             <fieldset>
                                                 <label for="quarto">Quarto</label>
-                                                <input type="number" name="quarto" required>
+                                                <input type="number" name="quarto" class="form-control" required>
+                                                <hr>
                                             </fieldset>
                                         </div>
                                         <div class="col-lg-12">
                                             <fieldset>
                                                 <label for="wc">WC</label>
-                                                <input type="number" name="wc" required>
+                                                <input type="number" name="wc" class="form-control" required>
+                                                <hr>
                                             </fieldset>
                                         </div>
                                         <div class="col-lg-12">
                                             <fieldset>
                                                 <label for="garagem">Garagem</label>
-                                                <input type="number" name="garagem" required>
+                                                <input type="number" name="garagem" class="form-control" required>
+                                                <hr>
                                             </fieldset>
                                         </div>
                                         <div class="col-lg-12">
                                             <fieldset>
                                                 <label for="preco">Preco</label>
-                                                <input type="number" name="preco" required>
+                                                <input type="number" name="preco" class="form-control" required>
+                                                <hr>
                                             </fieldset>
                                         </div>
                                         <div class="col-lg-12">
                                             <fieldset>
                                                 <label for="foto">Foto</label>
-                                                <input type="file" name="foto" required>
+                                                <input type="file" name="foto" class="form-control" required>
+                                                <hr>
                                             </fieldset>
                                         </div>
                                         <div class="col-lg-12">
                                             <fieldset>
-                                                <button type="submit"  value="submitCriar" name="submit">Criar</button>
-                                                <button type="submit"  value="submitActualizar" name="submit">Actualizar</button>
-                                                <button type="submit"  value="submitApagar" name="submit">Apagar</button>
+                                                <button type="submit"  value="submitCriar" name="submit" class="main-button">Criar</button>
+                                                <button type="submit"  value="submitActualizar" name="submit" class="main-button">Actualizar</button>
+                                                <button type="submit"  value="submitApagar" name="submit" class="main-button">Apagar</button>
                                             </fieldset>
                                             <hr>
                                         </div>
@@ -155,6 +164,7 @@
             </div>
         </div>
     </div>
+    
 
   <!-- Scripts -->
   <script src="vendor/jquery/jquery.min.js"></script>
