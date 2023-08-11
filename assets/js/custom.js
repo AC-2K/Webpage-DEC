@@ -96,3 +96,14 @@ function scrollFunction() {
 function whatsApp() {
   location.replace("https://wa.me/258848100497");
 }
+
+function toggleSelect(checkboxId, selectId) {
+  var enableSelectCheckbox = document.getElementById(checkboxId);
+  var selectElement = document.getElementById(selectId);
+
+  if (enableSelectCheckbox.checked) {
+      selectElement.disabled = false;
+  } else {
+      selectElement.disabled = true;
+  }
+}
