@@ -23,9 +23,7 @@
             } 
             else 
             {
-    
-                header("Location: auth.html");
-                
+                throw new Exception("Erro - Inseriu dados invalidos");   
             }
         } catch (\Throwable $th) {
             header("Location: auth.html");
