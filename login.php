@@ -6,12 +6,11 @@
     
     $user = $_POST['user'];
     $pass = $_POST['pass'];
+    $_SESSION["usuario"] = $user;
+    $cont = 0;
 
-    //TODO - Implementar o hash para acesso login
-    $hash = password_hash($pass, PASSWORD_DEFAULT);
-
-    $stmt = $link->prepare(" SELECT user_name, user_pass from user where user_name = ? AND user_pass = ? ");
-    $stmt->bind_param("ss", $user, $pass);
+    $stmt = $link->prepare(" SELECT user_name, user_pass from user where user_name = ?");
+    $stmt->bind_param("s", $user);
 
     $stmt->execute();
     $result = $stmt->get_result();
@@ -19,15 +18,28 @@
         try {
             if (sizeof($data) > 0 ) 
             {
-                header("Location: gestao.html");
+                for ($i=0; $i < sizeof($data); $i++) { 
+                    $hashed_password = $data['user_pass'];
+
+                    if(password_verify($pass, $hashed_password)) {
+                        header("Location: gestao.php");
+                    }
+                }
+                if ($cont == 0) {
+                    echo '<script type="text/javascript">';
+                    echo 'alert("Erro de insercao");';
+                    echo 'window.location.href = "auth.html";';
+                    echo '</script>';
+                }               
             } 
             else 
             {
-                throw new Exception("Erro - Inseriu dados invalidos");   
+                throw new Exception("Erro - usuario nao encontrado");   
             }
         } catch (\Throwable $th) {
-            header("Location: auth.html");
+            echo '<script type="text/javascript">';
+            echo 'alert("Erro de insercao");';
+            echo 'window.location.href = "auth.html";';
+            echo '</script>';
         }  
-
-
 ?>

@@ -1,3 +1,13 @@
+<?php
+session_start();
+
+if (!isset($_SESSION["usuario"])) {
+    echo '<script type="text/javascript">';
+    echo 'alert("Pagina indisponivel, nao acedeu");';;
+    echo 'window.location.href = "auth.html";';
+    echo '</script>';
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -51,7 +61,7 @@
               <li><a href="category.html">Sobre</a></li>
               <li><a href="listing.html">Projectos</a></li>
               <li><a href="contact.html">Contacto</a></li> 
-              <li><a href="auth.html"><i class="fa fa-plus"></i> </a></li> 
+              <li><a href="auth.php"><i class="fa fa-plus"></i> </a></li> 
             </ul>        
             <a class='menu-trigger'>
                 <span>Menu</span>
@@ -263,7 +273,7 @@
                                                         <input type="text" class="form-control" name="nomeDEL">
                                                     </div>
                                                     <div class="modal-footer">
-                                                        <button class="main-button" name="submit" value="submitApagar" id="continuarDelete" >continuar</button>
+                                                        <button class="main-button" name="submit" value="submitApagar" id="continuarDelete">continuar</button>
                                                         <hr>
                                                     </div>
                                                 </div>
@@ -277,8 +287,7 @@
                                     </div>
                                 </form>
                             </div>
-                        </div>
-                                <script> 
+                            <script> 
                                     $('document').ready(function(){
                                         $('#botaoACT').on('click',function(e){
                                             e.preventDefault();
@@ -299,8 +308,7 @@
                                             $('form').submit();
                                         });
                                     });    
-                                </script>
-                            </div>
+                            </script>
                         </div>
                     </div>
                 </div>
