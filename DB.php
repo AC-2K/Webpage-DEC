@@ -47,36 +47,44 @@ try {
             'image/jpg',
             'image/png'
         );
+
+
         if(($_FILES['foto']['size'] >= $maxsize) || ($_FILES["foto"]["size"] == 0)) {
-            $errors[] = 'Ficheiro grande. Deve ser menor que 2 megabytes.';
+            echo '<script type="text/javascript">';
+            echo 'alert("Ficheiro grande. Deve ser menor que 2 megabytes.");';
+            echo 'window.location.href = "gestao.php";';
+            echo '</script>';
         }
     
         if((!in_array($_FILES['foto']['type'], $acceptable)) ) {
-            $errors[] = 'Invalid file type. So JPG, e PNG sao permitidos';
+            echo '<script type="text/javascript">';
+            echo 'alert("Invalid file type. So JPG, e PNG sao permitidos");';
+            echo 'window.location.href = "gestao.php";';
+            echo '</script>';
+        }
+        list($width, $height, $type, $attr) = getimagesize($tempname);
+
+        if($width > 600 || $height > 500){
+            echo '<script type="text/javascript">';
+            echo 'alert("Imagem excedeu limites");';
+            echo 'window.location.href = "gestao.php";';
+            echo '</script>';
         }
     
         $stmt = $conn->prepare(" INSERT INTO projecto (pro_nome, pro_tipo, pro_categoria, pro_tamanho, pro_quarto, pro_wc, pro_garagem, pro_preco, pro_img) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?) ");
-        $stmt->bind_param("ssssiiiis", $nome, $tipo, $categoria, $tamanho, $quarto, $wc, $garagem, $preco, $foto);
+        $stmt->bind_param("ssssiiiis", $nome, $tipo, $categoria, $tamanho, $quarto, $wc, $garagem, $preco, $$image_p);
     
-        if(count($errors) == 0) {
-            if (move_uploaded_file($tempname, $folder)) {
+        if (move_uploaded_file($tempname, $folder)) {
                     
-                if ($stmt->execute()) {
-                    header("Location: gestao.html");
-                }else{
-                    throw new Exception("Erro - Inseriu dados invalidos");
-                } 
-        
-            }
-        } else {
-            
-            foreach($errors as $error) {
-                echo '<script>alert("'.$error.'");</script>';
-            }
-            echo"<td width=14% align=center><input type=button value=Export onclick=myselect() /></td>";
-        }
-   
-    
+            if ($stmt->execute() ) {
+                echo '<script type="text/javascript">';
+                echo 'alert("Projecto criado");';
+                echo 'window.location.href = "gestao.php";';
+                echo '</script>';
+            }else{
+                throw new Exception("Erro - Inseriu dados invalidos");
+            } 
+        }  
     }
 }catch (\Throwable $th) {
         $msg =  " " . $th->getMessage();;
@@ -106,7 +114,7 @@ try{
         $stmt->bind_param("s", $nome);
         
         if ($stmt->execute()) {
-            header("Location: gestao.html");
+            header("Location: gestao.php");
         }else{
             throw new Exception("Erro - Inseriu dados invalidos");
         }  
@@ -116,7 +124,7 @@ try{
         $stmt->bind_param("s",$tipo);
         
         if ($stmt->execute()) {
-            header("Location: gestao.html");
+            header("Location: gestao.php");
         }else{
             throw new Exception("Erro - Inseriu dados invalidos");
         }  
@@ -127,7 +135,7 @@ try{
         $stmt->bind_param("s",$categoria);
         
         if ($stmt->execute()) {
-            header("Location: gestao.html");
+            header("Location: gestao.php");
         } 
         else{
             throw new Exception("Erro - Inseriu dados invalidos");
@@ -138,7 +146,7 @@ try{
         $stmt->bind_param("i",$tamanho);
         
         if ($stmt->execute()) {
-            header("Location: gestao.html");
+            header("Location: gestao.php");
         }
         else{
             throw new Exception("Erro - Inseriu dados invalidos");
@@ -149,7 +157,7 @@ try{
         $stmt->bind_param("i", $quarto);
         
         if ($stmt->execute()) {
-            header("Location: gestao.html");
+            header("Location: gestao.php");
         } 
         else{
             throw new Exception("Erro - Inseriu dados invalidos");
@@ -160,7 +168,7 @@ try{
         $stmt->bind_param("i", $wc);
         
         if ($stmt->execute()) {
-            header("Location: gestao.html");
+            header("Location: gestao.php");
         } 
         else{
             throw new Exception("Erro - Inseriu dados invalidos");
@@ -171,7 +179,7 @@ try{
         $stmt->bind_param("i",$garagem);
         
         if ($stmt->execute()) {
-            header("Location: gestao.html");
+            header("Location: gestao.php");
         }
         else{
             throw new Exception("Erro - Inseriu dados invalidos");
@@ -182,7 +190,7 @@ try{
         $stmt->bind_param("i", $preco);
         
         if ($stmt->execute()) {
-            header("Location: gestao.html");
+            header("Location: gestao.php");
         } 
         else{
             throw new Exception("Erro - Inseriu dados invalidos");
@@ -217,7 +225,7 @@ try{
 
         
         if ($stmt->execute() && sizeof($errors) == 0) {
-            header("Location: gestao.html");
+            header("Location: gestao.php");
         } else {
             echo $errors[0];
             echo $errors[1];
@@ -227,7 +235,7 @@ try{
     }
 
     if($count == 0){
-        header("Location: gestao.html");
+        header("Location: gestao.php");
     }
 }
 }catch (\Throwable $th) {
@@ -262,7 +270,7 @@ try{
             }
 
         if ($stmt->execute()) { 
-            header("Location: gestao.html");
+            header("Location: gestao.php");
             
         }else{
             throw new Exception("Erro - Inseriu dados invalidos");
@@ -278,7 +286,7 @@ try{
     <script>
         function myselect()
         {
-            location.replace("gestao.html");
+            location.replace("gestao.php");
         }
     </script>
 <?php   
