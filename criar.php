@@ -14,7 +14,7 @@
             //TODO - Implementar o hash para acesso login
             $hash = password_hash($pass, PASSWORD_DEFAULT);
 
-            $stmt = $link->prepare(" INSERT INTO user (user_name, user_pass) VALUES (?,?)");
+            $stmt = $link->prepare(" INSERT INTO user (username, pass) VALUES (?,?)");
             $stmt->bind_param("ss", $user, $hash);
         
             $stmt->execute();
@@ -35,7 +35,7 @@
         } catch (\Throwable $th) {
             echo '<script type="text/javascript">';
             echo 'alert("usuario existente - cria novo usuario");';
-            echo 'window.location.href = "auth.html";';
+            echo 'window.location.href = "login.html";';
             echo '</script>';
         } 
     }

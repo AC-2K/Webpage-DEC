@@ -9,7 +9,7 @@
     $_SESSION["usuario"] = $user;
     $cont = 0;
 
-    $stmt = $link->prepare(" SELECT user_name, user_pass from user where user_name = ?");
+    $stmt = $link->prepare(" SELECT username, pass from user where username = ?");
     $stmt->bind_param("s", $user);
 
     $stmt->execute();
@@ -19,7 +19,7 @@
             if (sizeof($data) > 0 ) 
             {
                 for ($i=0; $i < sizeof($data); $i++) { 
-                    $hashed_password = $data['user_pass'];
+                    $hashed_password = $data['pass'];
 
                     if(password_verify($pass, $hashed_password)) {
                         header("Location: gestao.php");
@@ -28,7 +28,7 @@
                 if ($cont == 0) {
                     echo '<script type="text/javascript">';
                     echo 'alert("Erro de insercao");';
-                    echo 'window.location.href = "auth.html";';
+                    echo 'window.location.href = "login.html";';
                     echo '</script>';
                 }               
             } 
@@ -39,7 +39,7 @@
         } catch (\Throwable $th) {
             echo '<script type="text/javascript">';
             echo 'alert("Erro de insercao");';
-            echo 'window.location.href = "auth.html";';
+            echo 'window.location.href = "login.html";';
             echo '</script>';
         }  
 ?>
