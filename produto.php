@@ -3,7 +3,7 @@
 
 ?>
 <!DOCTYPE html>
-<html  >
+<html>
 <head>
   
   <meta charset="UTF-8">
@@ -15,6 +15,8 @@
   
   
   <title>produto</title>
+  <link rel="stylesheet" href="assets/map-icons/css/map-icons.min.css">
+  <link rel="stylesheet" href="assets/material-design/css/material-icons.min.css">
   <link rel="stylesheet" href="assets/web/assets/mobirise-icons2/mobirise2.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
@@ -39,7 +41,7 @@
 			<div class="navbar-brand">
 				<span class="navbar-logo">
 					<a href="https://mobiri.se">
-						<img src="assets/images/dec-white-logo.jpeg-506x506.jpg" alt="Mobirise Website Builder" style="height: 5rem;">
+						<img src="assets/images/logo-337x156.png" alt="DEC projects" style="height: 5rem;">
 					</a>
 				</span>
 				
@@ -54,14 +56,14 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item">
-						<a class="nav-link link text-danger text-primary display-4" href="index.html" aria-expanded="false">Home</a>
+						<a class="nav-link link text-success display-4" href="index.html" aria-expanded="false">Home</a>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link link text-danger dropdown-toggle display-4" href="https://mobiri.se" aria-expanded="false" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside">Saiba mais</a><div class="dropdown-menu" aria-labelledby="dropdown-205"><a class="text-danger dropdown-item text-primary display-4" href="sobre.html">Quem somos?</a><a class="text-danger dropdown-item text-primary display-4" href="metodologia.html">Metodologia</a><a class="text-danger dropdown-item text-primary display-4" href="metodosConstrucao.html">Métodos de construção</a><a class="text-danger dropdown-item text-primary display-4" href="faq.html">FAQ</a></div>
+						<a class="nav-link link dropdown-toggle text-success show display-4" href="https://mobiri.se" aria-expanded="false" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside">Saiba mais</a><div class="dropdown-menu show" aria-labelledby="dropdown-205" data-bs-popper="none"><a class="dropdown-item text-success display-4" href="sobre.html">Quem somos?</a><a class="dropdown-item text-success display-4" href="metodologia.html">Metodologia</a><a class="dropdown-item text-success display-4" href="metodosConstrucao.html">Métodos de construção</a><a class="dropdown-item text-success display-4" href="faq.html">FAQ</a></div>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link link text-danger dropdown-toggle show display-4" href="https://mobiri.se" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Sobre: Projecto</a><div class="dropdown-menu show" aria-labelledby="dropdown-875" data-bs-popper="none"><a class="text-danger dropdown-item text-primary display-4" href="projectoSobre.html">Sobre</a><a class="text-danger dropdown-item text-primary display-4" href="projectoExclusivo.html">Exclusivo</a><a class="text-danger dropdown-item text-primary display-4" href="projectoModificado.html">Modificado</a><a class="text-danger dropdown-item text-primary display-4" href="projectoPronto.html">Pronto</a></div>
-					</li><li class="nav-item"><a class="nav-link link text-danger show text-primary display-4" href="vendas.php">Projectos</a></li><li class="nav-item"><a class="nav-link link text-danger text-primary display-4" href="contacto.html">Contacto</a></li></ul>
+						<a class="nav-link link dropdown-toggle text-success display-4" href="https://mobiri.se" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">Sobre: Projecto</a><div class="dropdown-menu" aria-labelledby="dropdown-875"><a class="dropdown-item text-success display-4" href="projectoSobre.html">Sobre</a><a class="dropdown-item text-success display-4" href="projectoExclusivo.html">Exclusivo</a><a class="dropdown-item text-success display-4" href="projectoModificado.html">Modificado</a><a class="dropdown-item text-success display-4" href="projectoPronto.html">Pronto</a></div>
+					</li><li class="nav-item"><a class="nav-link link show text-success display-4" href="vendas.php">Projectos</a></li><li class="nav-item"><a class="nav-link link text-success display-4" href="contacto.html">Contacto</a></li></ul>
 				
 				
 			</div>
@@ -86,7 +88,9 @@
                 <div class="col-12 col-lg">
                     <div class="text-box">
                     <?php echo '<h4 class="item-title mbr-fonts-style display-5"> <strong>'.$rows['nome'].'</strong></h4>'; ?>
-                      <?php echo '<p class="mbr-text mbr-fonts-style mt-3 display-7">'.$rows['descricao'].'</p> '; ?>                            
+                    <?php echo '<hr> '; ?>
+                      <?php echo '<p class="mbr-text mbr-fonts-style mt-3 display-7">'.$rows['descricao'].'</p> '; ?>
+                      <?php echo '<p class="mbr-text mbr-fonts-style mt-3 display-7"> Area de cobertura - '.$rows['area'].'m2</p> '; ?>                            
                         <div class="cost">
                           <?php echo '<p class="mbr-text mbr-fonts-style mt-3 display-7">'.$rows['preco'].',00 MZN</p> '; ?> 
                           <?php echo '<hr> '; ?>
@@ -102,7 +106,60 @@
 <?php } ?>
 </section>
 
-<section data-bs-version="5.1" class="gallery5 mbr-gallery cid-tPruEDLmmD" id="gallery5-5w">
+<section data-bs-version="5.1" class="features25 cid-uAsqRVruOH" id="features1-8d">
+    
+<?php
+  if(!empty($row))
+    foreach($row as $rows){
+  ?>
+   
+    
+    <div class="container">
+        <div class="row mb-5">
+            
+        </div>
+        <div class="row">
+            
+            <div class="item features-without-image mb-5 col-12 col-md-3 active">
+                <div class="item-wrapper align-center">
+                    <div class="iconfont-wrapper">
+                        <span class="mbr-iconfont mobi-mbri-edit mobi-mbri" style="font-size: 100px; color: rgb(0, 0, 0); fill: rgb(0, 0, 0);"></span>
+                    </div>
+                    <h5 class="card-title mbr-fonts-style display-7"> <strong>Perimetro em metros</strong></h5>
+                    <?php echo '<p class="card-text mbr-fonts-style mb-0 display-7">'.$rows['tamanho'].'</p> '; ?> 
+                </div>
+            </div><div class="item features-without-image mb-5 col-12 col-md-3">
+                <div class="item-wrapper align-center">
+                    <div class="iconfont-wrapper">
+                        <span class="mbr-iconfont material material-hotel" style="font-size: 100px; color: rgb(0, 0, 0); fill: rgb(0, 0, 0);"></span>
+                    </div>
+                    <h5 class="card-title mbr-fonts-style display-7"><strong>Quartos</strong><br></h5>
+                    <?php echo '<p class="card-text mbr-fonts-style mb-0 display-7">'.$rows['quarto'].'</p> '; ?> 
+                </div>
+            </div><div class="item features-without-image mb-5 col-12 col-md-3">
+                <div class="item-wrapper align-center">
+                    <div class="iconfont-wrapper">
+                        <span class="mbr-iconfont map-icon map-icon-toilet" style="font-size: 100px; color: rgb(0, 0, 0); fill: rgb(0, 0, 0);"></span>
+                    </div>
+                    <h5 class="card-title mbr-fonts-style display-7"><strong>WC</strong><br></h5>
+                    <?php echo '<p class="card-text mbr-fonts-style mb-0 display-7">'.$rows['wc'].'</p> '; ?> 
+                </div>
+            </div><div class="item features-without-image mb-5 col-12 col-md-3">
+                <div class="item-wrapper align-center">
+                    <div class="iconfont-wrapper">
+                        <span class="mbr-iconfont material material-directions-car" style="font-size: 100px; color: rgb(0, 0, 0); fill: rgb(0, 0, 0);"></span>
+                    </div>
+                    <h5 class="card-title mbr-fonts-style display-7"><strong>Garagem</strong><br></h5>
+                    <?php echo '<p class="card-text mbr-fonts-style mb-0 display-7">'.$rows['garagem'].'</p> '; ?> 
+                </div>
+            </div>
+            
+        </div>
+    </div>
+    <?php } ?>
+</section>
+
+<section data-bs-version="5.1" class="gallery5 mbr-gallery cid-uAsvLK22GC" id="gallery5-8f">
 <div class="container">
   <div class="row mbr-gallery mt-4"> 
 <?php
@@ -173,16 +230,58 @@
 </div>
 </section>
 
+<section data-bs-version="5.1" class="image3 cid-uAssLmCaHL" id="image03-8e">
+  
+
+  
+  
+
+  <div class="container">
+    <div class="row justify-content-center">
+      <div class="col-12 col-lg-12">
+        <h4 class="mbr-description mbr-fonts-style mb-3 align-center display-1">
+          <strong>Planta</strong></h4>
+        
+        <div class="image-wrapper">
+        <?php
+        if(!empty($row))
+            foreach($row as $rows){
+        ?>
+          <?php echo '<img class="w-100" src="assets/projectos/'.$rows['planta'].'" alt="Projecto DEC">'; ?>
+        <?php } ?>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section data-bs-version="5.1" class="footer4 cid-uAs5F2sexD" once="footers" id="footer04-8b">
+
+    
+
+    
+
+    <div class="container">
+        <div class="media-container-row align-center mbr-white">
+            <div class="col-12">
+                <p class="mbr-text mb-0 mbr-fonts-style display-7">
+                    © Copyright 2025  - All Rights Reserved
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
 <section data-bs-version="5.1" class="_customHTML cid-uz0Spk27YD" id="design-block-84">
  
   
      
   <div class="whatapp">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<a class="float" target="_blank" href="https://api.whatsapp.com/send?phone=258848100497&text=Cumprimentos!">
-<i class="fa fa-whatsapp my-float"></i>
-</a>
-	</div>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <a class="float" target="_blank" href="https://api.whatsapp.com/send?phone=258848100497&text=Cumprimentos, vi o website da DEC Projects e estou interessado nos vossos serviços">
+        <i class="fa fa-whatsapp my-float"></i>
+    </a>
+  </div>
   
 
 
@@ -207,23 +306,6 @@
        </h10>				
     </div>
   </div>  
-</section>
-
-<section data-bs-version="5.1" class="footer7 cid-uzq7UojcFK mbr-reveal" once="footers" id="footer7-8a">
-
-    
-
-    
-
-    <div class="container">
-        <div class="media-container-row align-center mbr-white">
-            <div class="col-12">
-                <p class="mbr-text mb-0 mbr-fonts-style display-7">
-                    © Copyright 2025&nbsp; - All Rights Reserved
-                </p>
-            </div>
-        </div>
-    </div>
 </section><section><a href="https://mobiri.se"></a><a href="https://mobiri.se"></a></section><script src="assets/bootstrap/js/bootstrap.bundle.min.js"></script>  <script src="assets/smoothscroll/smooth-scroll.js"></script>  <script src="assets/ytplayer/index.js"></script>  <script src="assets/dropdown/js/navbar-dropdown.js"></script>  <script src="assets/theme/js/script.js"></script>  
   
   

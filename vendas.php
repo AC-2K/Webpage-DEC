@@ -15,7 +15,6 @@
   
   
   <title>vendas</title>
-  <link rel="stylesheet" href="assets/material-design/css/material-icons.min.css">
   <link rel="stylesheet" href="assets/web/assets/mobirise-icons2/mobirise2.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
   <link rel="stylesheet" href="assets/bootstrap/css/bootstrap-grid.min.css">
@@ -32,7 +31,7 @@
 </head>
 <body>
   
-  <section data-bs-version="5.1" class="menu menu1 cid-uz0qOnXarF" once="menu" id="menu01-7a">
+<section data-bs-version="5.1" class="menu menu1 cid-uz0qOnXarF" once="menu" id="menu01-7a">
 	
 
 	<nav class="navbar navbar-dropdown navbar-fixed-top navbar-expand-lg">
@@ -40,7 +39,7 @@
 			<div class="navbar-brand">
 				<span class="navbar-logo">
 					<a href="https://mobiri.se">
-						<img src="assets/images/dec-white-logo.jpeg-506x506.jpg" alt="Mobirise Website Builder" style="height: 5rem;">
+						<img src="assets/images/logo-337x156.png" alt="DEC projects" style="height: 5rem;">
 					</a>
 				</span>
 				
@@ -55,14 +54,14 @@
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item">
-						<a class="nav-link link text-danger text-primary display-4" href="index.html" aria-expanded="false">Home</a>
+						<a class="nav-link link text-success display-4" href="index.html" aria-expanded="false">Home</a>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link link text-danger dropdown-toggle display-4" href="https://mobiri.se" aria-expanded="false" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside">Saiba mais</a><div class="dropdown-menu" aria-labelledby="dropdown-205"><a class="text-danger dropdown-item text-primary display-4" href="sobre.html">Quem somos?</a><a class="text-danger dropdown-item text-primary display-4" href="metodologia.html">Metodologia</a><a class="text-danger dropdown-item text-primary display-4" href="metodosConstrucao.html">Métodos de construção</a><a class="text-danger dropdown-item text-primary display-4" href="faq.html">FAQ</a></div>
+						<a class="nav-link link dropdown-toggle text-success show display-4" href="https://mobiri.se" aria-expanded="false" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside">Saiba mais</a><div class="dropdown-menu show" aria-labelledby="dropdown-205" data-bs-popper="none"><a class="dropdown-item text-success display-4" href="sobre.html">Quem somos?</a><a class="dropdown-item text-success display-4" href="metodologia.html">Metodologia</a><a class="dropdown-item text-success display-4" href="metodosConstrucao.html">Métodos de construção</a><a class="dropdown-item text-success display-4" href="faq.html">FAQ</a></div>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link link text-danger dropdown-toggle show display-4" href="https://mobiri.se" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Sobre: Projecto</a><div class="dropdown-menu show" aria-labelledby="dropdown-875" data-bs-popper="none"><a class="text-danger dropdown-item text-primary display-4" href="projectoSobre.html">Sobre</a><a class="text-danger dropdown-item text-primary display-4" href="projectoExclusivo.html">Exclusivo</a><a class="text-danger dropdown-item text-primary display-4" href="projectoModificado.html">Modificado</a><a class="text-danger dropdown-item text-primary display-4" href="projectoPronto.html">Pronto</a></div>
-					</li><li class="nav-item"><a class="nav-link link text-danger show text-primary display-4" href="vendas.php">Projectos</a></li><li class="nav-item"><a class="nav-link link text-danger text-primary display-4" href="contacto.html">Contacto</a></li></ul>
+						<a class="nav-link link dropdown-toggle text-success display-4" href="https://mobiri.se" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">Sobre: Projecto</a><div class="dropdown-menu" aria-labelledby="dropdown-875"><a class="dropdown-item text-success display-4" href="projectoSobre.html">Sobre</a><a class="dropdown-item text-success display-4" href="projectoExclusivo.html">Exclusivo</a><a class="dropdown-item text-success display-4" href="projectoModificado.html">Modificado</a><a class="dropdown-item text-success display-4" href="projectoPronto.html">Pronto</a></div>
+					</li><li class="nav-item"><a class="nav-link link show text-success display-4" href="vendas.php">Projectos</a></li><li class="nav-item"><a class="nav-link link text-success display-4" href="contacto.html">Contacto</a></li></ul>
 				
 				
 			</div>
@@ -88,7 +87,7 @@
 				</div>
 			</div>
 			<div class="col-12 col-lg-6">
-				<h1 class="mbr-section-title mbr-fonts-style mb-4 display-1"><strong>Portal de projectos</strong></h1>
+				<h1 class="mbr-section-title mbr-fonts-style mb-4 display-2"><strong>Portal de projectos</strong></h1>
 				
 				
 				
@@ -106,47 +105,49 @@
         <div class="row justify-content-center">
             <div class="title col-md-12 col-lg-8">
                 
-          
-<!-- Portfolio Gallery Grid -->
-<?php
-  if(!empty($row))
-    foreach($row as $rows){?>  
-      <?php echo '<div class="row"> '; ?>
-        <?php echo '<form action="produto.php" method="POST"  enctype="multipart/form-data"> '; ?>
-        <?php echo '<div class="column nature">'; ?> 
-          <?php echo '<div class="content">'; ?>
-            <?php echo '<img src="assets/DB/'.$rows['img'].'" alt="projecto'.$rows['nome'].' ">'; ?> 
-            <?php echo '<div class="item-content">'; ?>
-              <?php echo '<h4 class="item-title mbr-fonts-style display-5">  <strong>'.$rows['nome'].'</strong></h4>'; ?>
-              <?php echo '<br>'; ?>
-              <?php echo '<span class="mbr-iconfont mobi-mbri-edit-2 mobi-mbri" style="font-size: 30px;> </span><p class="mbr-text mbr-fonts-style mt-3 display-7"> - Tamanho</p>  '; ?>
-              <?php echo '<p class="mbr-text mbr-fonts-style mt-3 display-7">'.$rows['tamanho'].'</p> '; ?>
-              <?php echo '<hr>'; ?>
-              <?php echo '<span class="mbr-iconfont mobi-mbri-home mobi-mbri" style="font-size: 30px;> </span><p class="mbr-text mbr-fonts-style mt-3 display-7"> - Tipo</p>'; ?>
-              <?php echo '<p class="mbr-text mbr-fonts-style mt-3 display-7">'.$rows['tipo'].'</p> '; ?>
-              <?php echo '<hr>'; ?>
-              <?php echo '<span class="mbr-iconfont material material-airline-seat-flat" style="font-size: 30px;><p class="mbr-text mbr-fonts-style mt-3 display-7"></p></span>'; ?>  
-              <?php echo '<p class="mbr-text mbr-fonts-style mt-3 display-7">'.$rows['quarto'].'</p> '; ?>
-              <?php echo '<hr>'; ?>
-              <?php echo '<span class="mbr-iconfont material material-wc" style="font-size: 30px;><p class="mbr-text mbr-fonts-style mt-3 display-7"> - WC</p></span>'; ?> 
-              <?php echo '<p class="mbr-text mbr-fonts-style mt-3 display-7">'.$rows['wc'].'</p> '; ?>
-              <?php echo '<hr>'; ?>
-              <?php echo '<span class="mbr-iconfont material material-time-to-leave" style="font-size: 30px;><p class="mbr-text mbr-fonts-style mt-3 display-7"></p></span>'; ?>
-              <?php echo '<p class="mbr-text mbr-fonts-style mt-3 display-7">'.$rows['garagem'].'</p> '; ?>
-              <?php echo '<hr>'; ?>
-              <?php echo '<input type="hidden" name="ID" value="'.$rows['id'].'">'; ?>
-              <?php echo '<span class="mbr-iconfont mobi-mbri-cash mobi-mbri" style="font-size: 30px;><p class="mbr-text mbr-fonts-style mt-3 display-7"></p></span>'; ?>
-              <?php echo '<p class="mbr-text mbr-fonts-style mt-3 display-7">'.$rows['preco'].',00 MZN</p> '; ?>
-              <?php echo '<hr>'; ?>                                       
-            <?php echo '</div>'; ?>
-            <?php echo '<div class="mbr-section-btn align-center"> <button type="submit" class="btn btn-primary display-4" name="submit" value="produto">Estou interessado</button></div>'; ?> 
-          <?php echo '</div>'; ?> 
-        <?php echo '</div>'; ?>
-        <?php echo ' </form> '; ?> 
-      <?php echo '</div>'; ?>
-    <?php } ?>
-<!-- END GRID -->
 </div>
+
+<!-- Portfolio Gallery Grid -->
+<div class="container"> 
+  <div class="row">
+    <?php
+      if (!empty($row)) {
+        $counter = 0; 
+        foreach($row as $rows) {
+          if ($counter % 2 == 0 && $counter != 0) {
+            echo '</div><div class="row">'; 
+          }
+          $counter++;
+    ?>
+      <div class="col-md-6 ">  
+        <form action="produto.php" method="POST" enctype="multipart/form-data">
+          <div class="column nature">
+            <div class="content">
+              <img src="assets/DB/<?php echo $rows['img']; ?>" alt="projecto <?php echo $rows['nome']; ?>" 
+              style="width: 400px; height: 300px; display: block; margin: 0 auto;" class="mb-6">
+              <br>
+              <h4 class="item-title mbr-fonts-style display-5" ><strong><?php echo $rows['nome']; ?></strong></h4>
+              <p class="mbr-text mbr-fonts-style mt-3 display-7" style="width: 400px; height: 100%; display: block; margin: 0 auto;" class="mb-6" >Casa de <?php echo $rows['tipo']; ?>, <?php echo $rows['quarto']; ?> quartos e garagem para <?php echo $rows['garagem']; ?> veículos</p>
+              <hr>
+              <input type="hidden" name="ID" value="<?php echo $rows['id']; ?>">
+              <p class="mbr-text mbr-fonts-style mt-3 display-7" style="width: 400px; height: 100%; display: block; margin: 0 auto;" class="mb-6" ><?php echo $rows['preco']; ?>,00 MZN</p>
+              <hr>
+              <div class="mbr-section-btn align-center">
+                <button type="submit" class="btn btn-primary display-4" name="submit" value="produto" style="width: 400px; height: 100%; display: block; margin: 0 auto;" class="mb-6"">Estou interessado</button>
+              </div>
+              <hr>
+            </div>
+          </div>
+        </form>
+      </div>
+    <?php 
+        }
+      }
+    ?>
+  </div> <!-- End of row -->
+</div> <!-- End of container -->
+
+<!-- END GRID -->
 
       <script>
                 filterSelection("all") // Execute the function and show all columns
@@ -206,11 +207,11 @@ for (var i = 0; i < btns.length; i++) {
   
      
   <div class="whatapp">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
-<a class="float" target="_blank" href="https://api.whatsapp.com/send?phone=258848100497&text=Cumprimentos!">
-<i class="fa fa-whatsapp my-float"></i>
-</a>
-	</div>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css">
+    <a class="float" target="_blank" href="https://api.whatsapp.com/send?phone=258848100497&text=Cumprimentos, vi o website da DEC Projects e estou interessado nos vossos serviços">
+        <i class="fa fa-whatsapp my-float"></i>
+    </a>
+  </div>
   
 
 
@@ -237,7 +238,7 @@ for (var i = 0; i < btns.length; i++) {
   </div>  
 </section>
 
-<section data-bs-version="5.1" class="footer7 cid-uzq7UojcFK mbr-reveal" once="footers" id="footer7-8a">
+<section data-bs-version="5.1" class="footer4 cid-uAs5F2sexD" once="footers" id="footer04-8b">
 
     
 
@@ -247,7 +248,7 @@ for (var i = 0; i < btns.length; i++) {
         <div class="media-container-row align-center mbr-white">
             <div class="col-12">
                 <p class="mbr-text mb-0 mbr-fonts-style display-7">
-                    © Copyright 2025&nbsp; - All Rights Reserved
+                    © Copyright 2025  - All Rights Reserved
                 </p>
             </div>
         </div>
@@ -257,5 +258,4 @@ for (var i = 0; i < btns.length; i++) {
   
  <div id="scrollToTop" class="scrollToTop mbr-arrow-up"><a style="text-align: center;"><i class="mbr-arrow-up-icon mbr-arrow-up-icon-cm cm-icon cm-icon-smallarrow-up"></i></a></div>
   </body>
-  <script src="assets/js/custom.js"></script>
 </html>

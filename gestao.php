@@ -1,5 +1,6 @@
 <?php
 include 'connect.php';
+include 'csrf.php';
 
 if (!isset($_SESSION["usuario"])) {
     echo '<script type="text/javascript">';
@@ -9,7 +10,7 @@ if (!isset($_SESSION["usuario"])) {
 }
 ?>
 <!DOCTYPE html>
-<html>
+<html  >
 <head>
   
   <meta charset="UTF-8">
@@ -46,7 +47,7 @@ if (!isset($_SESSION["usuario"])) {
 			<div class="navbar-brand">
 				<span class="navbar-logo">
 					<a href="https://mobiri.se">
-						<img src="assets/images/dec-white-logo.jpeg-506x506.jpg" alt="Mobirise Website Builder" style="height: 5rem;">
+						<img src="assets/images/logo-337x156.png" alt="DEC projects" style="height: 5rem;">
 					</a>
 				</span>
 				
@@ -61,14 +62,14 @@ if (!isset($_SESSION["usuario"])) {
 			</button>
 			<div class="collapse navbar-collapse" id="navbarSupportedContent">
 				<ul class="navbar-nav nav-dropdown nav-right" data-app-modern-menu="true"><li class="nav-item">
-						<a class="nav-link link text-danger text-primary display-4" href="index.html" aria-expanded="false">Home</a>
+						<a class="nav-link link text-success display-4" href="index.html" aria-expanded="false">Home</a>
 					</li>
 					<li class="nav-item dropdown">
-						<a class="nav-link link text-danger dropdown-toggle display-4" href="https://mobiri.se" aria-expanded="false" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside">Saiba mais</a><div class="dropdown-menu" aria-labelledby="dropdown-205"><a class="text-danger dropdown-item text-primary display-4" href="sobre.html">Quem somos?</a><a class="text-danger dropdown-item text-primary display-4" href="metodologia.html">Metodologia</a><a class="text-danger dropdown-item text-primary display-4" href="metodosConstrucao.html">Métodos de construção</a><a class="text-danger dropdown-item text-primary display-4" href="faq.html">FAQ</a></div>
+						<a class="nav-link link dropdown-toggle text-success show display-4" href="https://mobiri.se" aria-expanded="false" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside">Saiba mais</a><div class="dropdown-menu show" aria-labelledby="dropdown-205" data-bs-popper="none"><a class="dropdown-item text-success display-4" href="sobre.html">Quem somos?</a><a class="dropdown-item text-success display-4" href="metodologia.html">Metodologia</a><a class="dropdown-item text-success display-4" href="metodosConstrucao.html">Métodos de construção</a><a class="dropdown-item text-success display-4" href="faq.html">FAQ</a></div>
 					</li>
-					<li class="nav-item dropdown">
-						<a class="nav-link link text-danger dropdown-toggle show display-4" href="https://mobiri.se" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="false">Sobre: Projecto</a><div class="dropdown-menu show" aria-labelledby="dropdown-875" data-bs-popper="none"><a class="text-danger dropdown-item text-primary display-4" href="projectoSobre.html">Sobre</a><a class="text-danger dropdown-item text-primary display-4" href="projectoExclusivo.html">Exclusivo</a><a class="text-danger dropdown-item text-primary display-4" href="projectoModificado.html">Modificado</a><a class="text-danger dropdown-item text-primary display-4" href="projectoPronto.html">Pronto</a></div>
-					</li><li class="nav-item"><a class="nav-link link text-danger show text-primary display-4" href="vendas.php">Projectos</a></li><li class="nav-item"><a class="nav-link link text-danger text-primary display-4" href="contacto.html">Contacto</a></li></ul>
+					<li class="nav-item dropdown open">
+						<a class="nav-link link dropdown-toggle text-success display-4" href="https://mobiri.se" data-toggle="dropdown-submenu" data-bs-toggle="dropdown" data-bs-auto-close="outside" aria-expanded="true">Sobre: Projecto</a><div class="dropdown-menu" aria-labelledby="dropdown-875"><a class="dropdown-item text-success display-4" href="projectoSobre.html">Sobre</a><a class="dropdown-item text-success display-4" href="projectoExclusivo.html">Exclusivo</a><a class="dropdown-item text-success display-4" href="projectoModificado.html">Modificado</a><a class="dropdown-item text-success display-4" href="projectoPronto.html">Pronto</a></div>
+					</li><li class="nav-item"><a class="nav-link link show text-success display-4" href="vendas.php">Projectos</a></li><li class="nav-item"><a class="nav-link link text-success display-4" href="contacto.html">Contacto</a></li></ul>
 				
 				
 			</div>
@@ -82,11 +83,12 @@ if (!isset($_SESSION["usuario"])) {
     <div class="container">
         <div class="mbr-section-head">
             <h3 class="mbr-section-title mbr-fonts-style align-center mb-0 display-2"><strong>Gestão de projectos</strong></h3>
+            
         </div>
-
         <div class="row justify-content-center mt-4">
             <div class="col-lg-8 mx-auto mbr-form" data-form-type="formoid">
                 <form action="DB.php" method="POST" class="mbr-form form-with-styler mx-auto"  enctype="multipart/form-data" >
+                <input type="hidden" id="csrf_tokenCreate" name="csrf_tokenCreate" value="<?php echo generateCsrfTokenCreate(); ?>">
                     <div class="dragArea row">
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" data-for="nome">
                             <input type="text" name="nome" placeholder="Nome projecto" data-form-field="name" class="form-control" value="" id="name-form7-4x" required>
@@ -126,8 +128,18 @@ if (!isset($_SESSION["usuario"])) {
                             <input type="number" name="preco" placeholder="Preço" data-form-field="number" class="form-control"  id="pass-form7-4x" required>
                         </div>
 
+                        <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" data-for="preco">
+                            <input type="number" name="area" placeholder="Area em metros" data-form-field="text" class="form-control"  id="pass-form7-4x" required>
+                        </div>
+
                         <div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" data-for="foto">
-                            <input type="file" name="foto" placeholder="Foto do projecto" data-form-field="file" class="form-control" id="pass-form7-4x" required>
+                            <label for="foto" class="item-title mbr-fonts-style display-5">Imagem de refência</label>
+                            <input type="file" name="foto"  data-form-field="file" class="form-control" id="pass-form7-4x" required>
+                        </div>
+
+						<div class="col-lg-12 col-md-12 col-sm-12 form-group mb-3" data-for="foto">
+                            <label for="foto" class="item-title mbr-fonts-style display-5">Planta do projecto</label>
+                            <input type="file" name="planta"  data-form-field="file" class="form-control" id="pass-form7-4x" required>
                         </div>
 
                         <div class="col-auto mbr-section-btn align-center">
@@ -139,7 +151,7 @@ if (!isset($_SESSION["usuario"])) {
         </div>
     </div>
 </section>
-
+<hr>
 <section data-bs-version="5.1" class="share3 cid-tONSftbrbu" id="share3-58">
     
     <div class="container">
@@ -152,14 +164,7 @@ if (!isset($_SESSION["usuario"])) {
                     <a class="iconfont-wrapper bg-facebook m-2 " href="javascript:OpenModal('Actualizar')">
                             <span class="mobi-mbri-update mobi-mbri" style="color: rgb(255, 255, 255); fill: rgb(255, 255, 255);"></span>
                         </a>
-                        
-                        
-                        
-                        
-                        
-                        
-                        
-                        
+ 
                         <a class="iconfont-wrapper bg-youtube m-2" href="javascript:OpenModal('Apagar')">
                             <span class="mobi-mbri-close mobi-mbri"></span>
                         </a>
@@ -169,7 +174,7 @@ if (!isset($_SESSION["usuario"])) {
         </div>
     </div>
 </section>
-
+<hr>
 <section data-bs-version="5.1" class="section-table cid-tOPfh4hjuc" id="design-block-5o">      
     <div class="container container-table">      
         <h2 class="mbr-section-title mbr-fonts-style align-center pb-3 display-2">Tabela de projectos</h2>            
@@ -190,6 +195,7 @@ if (!isset($_SESSION["usuario"])) {
                             <th class="head-item mbr-fonts-style display-8" data-sortable="false">Preço</th>
                             <th class="head-item mbr-fonts-style display-8" data-sortable="false">Descrição</th>
                             <th class="head-item mbr-fonts-style display-8" data-sortable="false">Imagem</th>
+                            <th class="head-item mbr-fonts-style display-8" data-sortable="false">Planta</th>
                         </tr>            
                     </thead>            
                     <tbody>     
@@ -207,7 +213,8 @@ if (!isset($_SESSION["usuario"])) {
                             <td class="body-item mbr-fonts-style display-8"> <?php echo $rows['garagem']; ?> </td>
                             <td class="body-item mbr-fonts-style display-8"> <?php echo $rows['preco']; ?> </td>
                             <td class="body-item mbr-fonts-style display-8"> <?php echo $rows['descricao']; ?> </td>
-                            <td class="body-item mbr-fonts-style display-8"> <img src="./assets/DB/<?php echo $rows['img']; ?>"> </td>                                                                               
+                            <td class="body-item mbr-fonts-style display-8"> <img src="./assets/DB/<?php echo $rows['img']; ?>"> </td>
+                            <td class="body-item mbr-fonts-style display-8"> <img src="./assets/projectos/<?php echo $rows['planta']; ?>"> </td>                                                                                 
                         </tr>
                             <?php } ?>
                     </tbody>          
@@ -219,7 +226,7 @@ if (!isset($_SESSION["usuario"])) {
         </div>    
     </div>
 </section>
-
+<hr>
 <section data-bs-version="5.1" class="share3 cid-tPrvPKsnyB" id="share3-5x">
     
     <div class="container">
@@ -248,21 +255,17 @@ if (!isset($_SESSION["usuario"])) {
         </div>
     </div>
 </section>
-
+<hr>
 <section data-bs-version="5.1" class="section-table cid-tPrAa9W4kR" id="design-block-61">      
     <div class="container container-table">      
         <h2 class="mbr-section-title mbr-fonts-style align-center pb-3 display-2">Tabela de imagens</h2>            
-        <div class="table-wrapper">        
-            <div class="container">                  
-
-            </div>        
+        <div class="table-wrapper">              
             <div class="container scroll">          
-                <table class="table" cellspacing="0">            
+                <table class="table" cellspacing="3">            
                     <thead>              
                         <tr class="table-heads ">                                                                                      
-                            <th class="head-item mbr-fonts-style display-6" data-sortable="false">ID de imagem</th>
-                            <th class="head-item mbr-fonts-style display-6" data-sortable="false">Projecto</th>
-                            <th class="head-item mbr-fonts-style display-6" data-sortable="false">Imagem</th>
+                            <th class="head-item mbr-fonts-style display-6" data-sortable="false" style="width:50%">Projecto</th>
+                            <th class="head-item mbr-fonts-style display-6" data-sortable="false" style="height:40px">Imagem</th>
                         </tr>            
                     </thead>            
                     <tbody>                                                                    
@@ -272,9 +275,8 @@ if (!isset($_SESSION["usuario"])) {
                                 { 
                         ?>                                                                
                         <tr>
-                            <td class="body-item mbr-fonts-style display-8"> <?php echo "<h2>".$rows['id']."</h2>"; ?> </td>
                             <td class="body-item mbr-fonts-style display-8"> <?php echo "<h2>".$rows['nome']."</h2>"; ?> </td>
-                            <td class="body-item mbr-fonts-style display-8"> <img src="./assets/projectos/<?php echo $rows['ficheiro']; ?>"> </td>      
+                            <td class="body-item mbr-fonts-style display-8" > <img src="./assets/projectos/<?php echo $rows['ficheiro']; ?>" height="250"> </td>      
                         </tr>
                             <?php } ?>
                     </tbody>          
@@ -312,15 +314,16 @@ if (!isset($_SESSION["usuario"])) {
                             <a href="#" class="no-anim close" data-bs-dismiss="modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></a>
                         </div>
                         <div class="modal-body display-7" id="delimagem_body">
-                            <div class="modal-body">                              
-                            <label for="id">ID de imagem & Projecto</label>
+                            <div class="modal-body">    
+                            <input type="hidden" id="csrf_tokenDeleteImage" name="csrf_tokenDeleteImage" value="<?php echo generateCsrfTokenDeleteImage(); ?>">                          
+                            <label for="id">Projecto</label>
                                 <select class="form-control" name="id" id="id" required>
                                     <?php
                                         if(!empty($row2))
                                             foreach($row2 as $rows)
                                             { 
-                                        ?>                                                                   
-                                            <option><?php echo $rows['id']." - ".$rows['nome']; ?></option>
+                                        ?>     
+                                            <option value="<?php echo $rows['id']?>" ><?php echo $rows['nome'] ?></option>                                                          
                                     <?php } ?>
                                 </select>                                                                             
                             </div>
@@ -422,7 +425,7 @@ if (!isset($_SESSION["usuario"])) {
                     </div>
                     <div class="modal-body display-7" id="criarImagem_body">
                         <div class="modal-body">
-                                                            
+                        <input type="hidden" id="csrf_tokenCreateImage" name="csrf_tokenCreateImage" value="<?php echo generateCsrfTokenCreateImage(); ?>">                                          
                         <label for="id">Projecto</label>
                             <select class="form-control" name="id" id="id" required>
                                 <?php
@@ -430,7 +433,7 @@ if (!isset($_SESSION["usuario"])) {
                                         foreach($row as $rows)
                                         { 
                                     ?>                                                                   
-                                        <option><?php echo $rows['id']." - ".$rows['nome']; ?></option>
+                                        <option value="<?php echo $rows['id']?>" ><?php echo $rows['nome'] ?></option>
                                 <?php } ?>
                             </select>
                                                                                 
@@ -541,6 +544,7 @@ if (!isset($_SESSION["usuario"])) {
                     </div>
                     <div class="modal-body display-7" id="Actualizar_body">
                         <div class="modal-body">
+                        <input type="hidden" id="csrf_tokenUpdate" name="csrf_tokenUpdate" value="<?php echo generateCsrfTokenUpdate(); ?>">                                          
                             <label for="id">Projecto</label>
                             <select class="form-control" name="id" id="id" required>
                                 <?php
@@ -548,7 +552,7 @@ if (!isset($_SESSION["usuario"])) {
                                         foreach($row as $rows)
                                         { 
                                     ?>                                                                   
-                                        <option><?php echo $rows['id']." - ".$rows['nome']; ?></option>
+                                        <option><?php echo $rows['nome']; ?></option>
                                 <?php } ?>
                             </select>
                             <hr>
@@ -596,10 +600,16 @@ if (!isset($_SESSION["usuario"])) {
                             <label for="preco">Preco</label>
                             <input type="number" name="preco" class="form-control" min="0">
                                                                 
+                            <label for="area">Area</label>
+                            <input type="number" name="area" class="form-control" min="0">
+                            
                             <hr>
                                                                 
-                            <!-- <label for="foto">Foto</label>
-                            <input type="file" name="foto" class="form-control">                                  -->
+                            <label for="fotoImagem">Foto</label>
+                            <input type="file" name="fotoImagem" class="form-control"> 
+
+                            <label for="planta">Planta do projecto</label>
+                            <input type="file" name="planta" class="form-control"> 
                         </div>
                     </div>
                     <div class="modal-footer">
@@ -705,7 +715,7 @@ document.addEventListener("DOMContentLoaded", function() {
                         </div>
                         <div class="modal-body display-7" id="Apagar_body">                                                    
                             <div class="modal-body">
-                                                            
+                                <input type="hidden" id="csrf_tokenDelete" name="csrf_tokenDelete" value="<?php echo generateCsrfTokenDelete(); ?>">                                          
                                 <label for="id">Projecto</label>
                                 <select class="form-control" name="id" id="id" required>
                                     <?php
@@ -713,7 +723,7 @@ document.addEventListener("DOMContentLoaded", function() {
                                             foreach($row as $rows)
                                             { 
                                         ?>                                                                   
-                                            <option><?php echo $rows['id']." - ".$rows['nome']; ?></option>
+                                            <option><?php echo $rows['nome']; ?></option>
                                     <?php } ?>
                                 </select>
                                                         
@@ -789,7 +799,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
 </section>
 
-<section data-bs-version="5.1" class="footer7 cid-uzq7UojcFK mbr-reveal" once="footers" id="footer7-8a">
+<section data-bs-version="5.1" class="footer4 cid-uAs5F2sexD" once="footers" id="footer04-8b">
 
     
 
@@ -799,7 +809,7 @@ document.addEventListener("DOMContentLoaded", function() {
         <div class="media-container-row align-center mbr-white">
             <div class="col-12">
                 <p class="mbr-text mb-0 mbr-fonts-style display-7">
-                    © Copyright 2025&nbsp; - All Rights Reserved
+                    © Copyright 2025  - All Rights Reserved
                 </p>
             </div>
         </div>

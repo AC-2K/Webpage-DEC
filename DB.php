@@ -1,4 +1,11 @@
 <?php
+include 'csrf.php';
+    //Photos insertion/manipulation limits
+   const maxSize = 2 * 1024 * 1024;  // 1MB in bytes
+   const maxWidth = 1500;            // Max image width
+   const maxHeight = 1080;           // Max image height
+   const allowedTypes = ['image/jpeg', 'image/png', 'image/gif'];  // Allowed MIME types
+
    session_start();
    $servername = "localhost";
    $username = "root";
@@ -18,6 +25,58 @@
         echo 'alert("' . $msg . '");';
         echo '</script>';
     }
+
+    //Insercao de imagens
+    function handleImageUpload($file, $targetDir, $maxSize, $maxWidth, $maxHeight, $allowedTypes,$campoEscolhido) {
+        // Check if file upload was successful
+        if (!isset($file['tmp_name']) || $file['error'] !== UPLOAD_ERR_OK) {
+            throw new Exception("File upload failed.");
+        }
+        if ($file['size'] > $maxSize) {
+            throw new Exception("The file is larger than " . ($maxSize / 1024 / 1024) . "MB.", 1);
+        }
+    
+        // Validate that the file is an image
+        $fileType = mime_content_type($file['tmp_name']);
+        if (!in_array($fileType, $allowedTypes)) {
+            throw new Exception("Only JPEG, PNG, and GIF images are allowed.", 1);
+        }
+    
+        // Get image dimensions (width and height)
+        list($width, $height) = getimagesize($file['tmp_name']);
+    
+        // Check if the image dimensions are within the allowed range
+        if ($width > $maxWidth || $height > $maxHeight) {
+            throw new Exception("The image exceeds the maximum dimensions of $maxWidth x $maxHeight pixels.", 1);
+        }
+    
+        // TODO Define the file name and destination path - verificar se le bem a variavel
+        $img = basename($_FILES[$campoEscolhido]['name']); //Get here extension from image
+        $result = explode('.',$img);
+        $fotoName= $result[0].date('dmY').'_'.time().'.'.$result[1]; 
+        $targetFile = $targetDir . $fotoName;
+    
+        // Move the uploaded file to the desired directory
+        if (move_uploaded_file($file['tmp_name'], $targetFile)) {
+            return $fotoName;
+        } else {
+            //throw new Exception("Error moving the uploaded file.", 1);                
+        }
+    }
+
+    //Remocao de imagens
+    function handleFileDeletion($fileName, $targetDir) {
+        $filePath = $targetDir . $fileName;
+    
+        // Check if the file exists
+        if (file_exists($filePath)) {
+            // Delete the file using unlink()
+            if (!unlink($filePath)) {
+                throw new Exception("Error deleting the file.", 1);
+            }
+        }
+    }
+
 ?>
 
 <?php 
@@ -87,6 +146,14 @@ $value = $_POST['submit'];
 //Metodo de inserir projectos
 try {
     if ($value =='submitCriar') {
+
+        $csrfToken = $_POST['csrf_tokenCreate'];
+
+        if (!verifyCsrfTokenCreate($csrfToken)) {
+            throw new Exception("Invalid CSRF token.", 1);
+
+        }
+
         $nome = $_POST['nome'];
         $tipo = $_POST['tipo'];
         $descricao = $_POST['descricao'];
@@ -95,63 +162,39 @@ try {
         $wc = $_POST['wc'];
         $garagem = $_POST['garagem'];
         $preco = $_POST['preco'];
+        $area = $_POST['area'];
         $ID = "PRO".trim(preg_replace('/\s+/', '', $nome)).substr(md5(time() . rand()), 0, 15);
-
-    
-        //Validacao de foto
-        $img = basename($_FILES['foto']['name']); //Get here extension from image
-        $result = explode('.',$img);
-        $foto= $result[0].date('dmY').'_'.time().'.'.$result[1]; 
-
-        $tempname = $_FILES["foto"]["tmp_name"];
-        $folder = "./assets/DB/" . $foto;
-    
-        $errors     = array();
-        $maxsize    = 2097152;
-        $acceptable = array(
-            'image/jpeg',
-            'image/jpg',
-            'image/png'
-        );
-
-
-        if(($_FILES['foto']['size'] >= $maxsize) ) {
-            echo '<script type="text/javascript">';
-            echo 'alert("Ficheiro grande. Deve ser menor que 2 megabytes.");';
-            echo 'window.location.href = "gestao.php";';
-            echo '</script>';
+     
+        //--------------------------- Manipulacao de imagens ---------------------------
+        if(isset($_FILES['foto']) && !empty($_FILES['foto']['name'])){
+            // Directory where the image will be stored
+            $targetDirFoto = "assets/DB/";
+            $foto = handleImageUpload($_FILES['foto'], $targetDirFoto, maxSize, maxWidth, maxHeight, allowedTypes,'foto');
+            //--------------------------- FIM ---------------------------
+        }else{
+            $foto = " ";
         }
-    
-        if((!in_array($_FILES['foto']['type'], $acceptable)) ) {
-            echo '<script type="text/javascript">';
-            echo 'alert("Invalid file type. So JPG, e PNG sao permitidos");';
-            echo 'window.location.href = "gestao.php";';
-            echo '</script>';
-        }
-        list($width, $height, $type, $attr) = getimagesize($tempname);
 
-        if($width > 1500 || $height > 1000){
-            echo '<script type="text/javascript">';
-            echo 'alert("Imagem excedeu limites");';
-            echo 'alert("Limites - width/largura - 1500 pixeis , heigth/altura - 1000 pixeis");';
-            echo 'alert("width - '.$width.' height - '.$height.' ");';
-            echo 'window.location.href = "gestao.php";';
-            echo '</script>';
+        if(isset($_FILES['planta']) && !empty($_FILES['planta']['name'])){
+            // Directory where the image will be stored
+            $targetDirPlanta = "assets/DB/";
+            $planta = handleImageUpload($_FILES['planta'], $targetDirPlanta, maxSize, maxWidth, maxHeight, allowedTypes,'planta');
+            //--------------------------- FIM ---------------------------
+        }else{
+            $planta = " ";
         }
+        //-----------------------------------------------
     
-        $stmt = $conn->prepare(" INSERT INTO projecto (id, nome, tipo, descricao, tamanho, quarto, wc, garagem, preco, img) VALUES (? ,?, ?, ?, ?, ?, ?, ?, ?, ?) ");
-        $stmt->bind_param("sssssiiiis",$ID, $nome, $tipo, $descricao, $tamanho, $quarto, $wc, $garagem, $preco, $foto);
-    
-        if (move_uploaded_file($tempname, $folder)) {
-                    
-            if ($stmt->execute() ) {
-                echo '<script type="text/javascript">';
-                echo 'alert("Projecto criado");';
-                echo 'window.location.href = "gestao.php";';
-                echo '</script>';
-            }else{
-                throw new Exception("Erro - Inseriu dados invalidos");
-            } 
+        $stmt = $conn->prepare(" INSERT INTO projecto (id, nome, tipo, descricao, tamanho, quarto, wc, garagem, preco, img, planta, area) VALUES (?, ?, ? ,?, ?, ?, ?, ?, ?, ?, ?, ?) ");
+        $stmt->bind_param("sssssiiiisss",$ID, $nome, $tipo, $descricao, $tamanho, $quarto, $wc, $garagem, $preco, $foto, $planta, $area);
+                
+        if ($stmt->execute() ) {
+            echo '<script type="text/javascript">';
+            echo 'alert("Projecto criado");';
+             echo 'window.location.href = "gestao.php";';
+            echo '</script>';
+        }else{
+            throw new Exception("Erro - Inseriu dados invalidos");
         }  
     }
 }catch (\Throwable $th) {
@@ -159,81 +202,60 @@ try {
         echo '<script type="text/javascript">';
         echo 'alert("'.$msg.'");';
         echo '</script>';
-        echo"<td width=14% align=center><input type=button value=Voltar onclick=myselect() /></td>";
+        header("Location: gestao.php");
+        exit();
 }
 
 //Metodo de inserir fotos de projectos
 try {
     if ($value =='imagemCriar') {
+        $csrfToken = $_POST['csrf_tokenCreateImage'];
+
+        if (!verifyCsrfTokenCreateImage($csrfToken)) {
+            throw new Exception("Invalid CSRF token.", 1);
+
+        }
+
         $nome = preg_replace('/ - .*/', '', $_POST['id']);
 
-        //Validacao de foto
-        $img = basename($_FILES['fotoImagem']['name']); //Get here extension from image
-        $result = explode('.',$img);
-        $foto = $result[0].date('dmY').'_'.time().'.'.$result[1]; 
-        
-       // $foto = $_FILES["fotoImagem"]["name"];
-        $tempname = $_FILES["fotoImagem"]["tmp_name"];
-        $folder = "./assets/projectos/" . $foto;
-    
-        $errors     = array();
-        $maxsize    = 9097152;
-        $acceptable = array(
-            'image/jpeg',
-            'image/jpg',
-            'image/png'
-        );
-
-        if(($_FILES['fotoImagem']['size'] >= $maxsize) ) {
-            echo '<script type="text/javascript">';
-            echo 'alert("Ficheiro grande. Deve ser menor que 2 megabytes.");';
-            echo 'window.location.href = "gestao.php";';
-            echo '</script>';
-        }
-    
-        if((!in_array($_FILES['fotoImagem']['type'], $acceptable)) ) {
-            echo '<script type="text/javascript">';
-            echo 'alert("Invalid file type. So JPG, e PNG sao permitidos");';
-            echo 'window.location.href = "gestao.php";';
-            echo '</script>';
-        }
-        list($width, $height, $type, $attr) = getimagesize($tempname);
-
-        if($width > 2000 || $height > 2000){
-            echo '<script type="text/javascript">';
-            echo 'alert("Imagem excedeu limites");';
-            echo 'alert("Limites - width/largura - 1500 pixeis , heigth/altura - 1000 pixeis");';
-            echo 'alert("width - '.$width.' height - '.$height.' ");';
-            echo 'window.location.href = "gestao.php";';
-            echo '</script>';
-        }
+        // Directory where the image will be stored
+        $targetDirPlanta = "assets/projectos/";
+        $foto = handleImageUpload($_FILES['fotoImagem'], $targetDirPlanta, maxSize, maxWidth, maxHeight, allowedTypes,'fotoImagem');
+        //--------------------------- FIM ---------------------------
     
         $stmt = $conn->prepare(" INSERT INTO imagens (id, ficheiro) VALUES (?, ?) ");
         $stmt->bind_param("ss", $nome, $foto);
-    
-        if (move_uploaded_file($tempname, $folder)) {
-                    
-            if ($stmt->execute() ) {
-                echo '<script type="text/javascript">';
-                echo 'alert("Imagem inserido no projecto '.$nome.' ");';
-                echo 'window.location.href = "gestao.php";';
-                echo '</script>';
-            }else{
-                throw new Exception("Erro - Inseriu dados invalidos");
-            } 
-        }  
+                        
+        if ($stmt->execute() ) {
+            echo '<script type="text/javascript">';
+            echo 'alert("Imagem inserido no projecto '.$nome.' ");';
+            echo 'window.location.href = "gestao.php";';
+            echo '</script>';
+        }else{
+            throw new Exception("Erro - Inseriu dados invalidos");
+        } 
+          
     }
 }catch (\Throwable $th) {
         $msg =  " " . $th->getMessage();
         phpAlert($msg);
-        echo"<td width=14% align=center><input type=button value=Voltar onclick=myselect() /></td>";
+        header("Location: gestao.php");
+        exit();
 }
   
 
 //actualizacao de projectos
 try{
     if ($value =='submitActualizar') {
-    $id = preg_replace('/(\d+)\s.*/', '$1', $_POST['id']);
+
+    $csrfToken = $_POST['csrf_tokenUpdate'];
+
+    if (!verifyCsrfTokenUpdate($csrfToken)) {
+        throw new Exception("Invalid CSRF token.", 1);
+
+    }
+
+    $nomeActual = $_POST['id'];
     $nome = $_POST['nome'];
     $tipo = $_POST['tipo'];
     $descricao = $_POST['descricao'];
@@ -242,84 +264,110 @@ try{
     $wc = $_POST['wc'];
     $garagem = $_POST['garagem'];
     $preco = $_POST['preco'];
-
-    $foto = $_FILES["foto"]["name"];
+    $area = $_POST['area'];
 
     if(isset($nome) && !empty($nome) ){
-        updateField($conn,"projecto","nome",$nome,"id",$id); 
+        updateField($conn,"projecto","nome",$nome,"nome",$nomeActual); 
     }
     if(isset($tipo) && !empty($tipo)){
-        updateField($conn,"projecto","tipo",$tipo,"id",$id); 
+        updateField($conn,"projecto","tipo",$tipo,"nome",$nomeActual); 
     }
     if(isset($descricao) && !empty($descricao)){
-        updateField($conn,"projecto","descricao",$descricao,"id",$id);  
+        updateField($conn,"projecto","descricao",$descricao,"nome",$nomeActual);  
     }
     if(isset($tamanho) && !empty($tamanho)){
-        updateField($conn,"projecto","tamanho",$tamanho,"id",$id);  
+        updateField($conn,"projecto","tamanho",$tamanho,"nome",$nomeActual);  
     }
     if(isset($quarto) && !empty($quarto)){
-        updateField($conn,"projecto","quarto",$quarto,"id",$id);    
+        updateField($conn,"projecto","quarto",$quarto,"nome",$nomeActual);    
     }
     if(isset($wc) && !empty($wc)){
-        updateField($conn,"projecto","wc",$wc,"id",$id); 
+        updateField($conn,"projecto","wc",$wc,"nome",$nomeActual); 
     }
     if(isset($garagem) && !empty($garagem)){
-        updateField($conn,"projecto","garagem",$garagem,"id",$id); 
+        updateField($conn,"projecto","garagem",$garagem,"nome",$nomeActual); 
     }
     if(isset($preco) && !empty($preco)){
-        updateField($conn,"projecto","preco",$preco,"id",$id); 
+        updateField($conn,"projecto","preco",$preco,"nome",$nomeActual); 
     }
-    if(isset($foto) && !empty($foto)){
-        $tempname = $_FILES["foto"]["tmp_name"];
-        $folder = "./assets/DB/" . $foto;
-    
-        $errors     = array();
-        $maxsize    = 2097152;
-        $acceptable = array(
-            'image/jpeg',
-            'image/jpg',
-            'image/png'
-        );
-        if(($_FILES['foto']['size'] >= $maxsize) || ($_FILES["foto"]["size"] == 0)) {
-            $errors[] = 'Ficheiro grande. Deve ser menor que 2 megabytes.';
-        }
-    
-        if((!in_array($_FILES['foto']['type'], $acceptable)) ) {
-            $errors[] = 'Invalid file type. So JPG, e PNG sao permitidos';
-        }
-  
-        //ApagarFotoAntiga
-        unlink($foto);
+    if(isset($area) && !empty($area)){
+        updateField($conn,"projecto","area",$area,"nome",$nomeActual); 
+    }
+    if(isset($_FILES['foto']) && !empty($_FILES['foto']['name'])){ 
+        //get file name from DB
+        $sql = "SELECT img FROM projecto WHERE nome = '$nomeActual' ";
 
-        updateField($conn,"projecto","foto",$foto,"id",$id); 
-        
-        if (sizeof($errors) > 0) {
-            echo $errors[0];
-            echo $errors[1];
-            throw new Exception("Erro - Inseriu dados invalidos");
+        $result = $conn->query($sql);
+
+        // Fetch the row data as an associative array
+        $row = $result->fetch_assoc();
+                        
+        // Process of unlinking
+        $targetDir = "assets/DB/";
+        $fotoDIR = $row['img'];
+
+        //Verificacao reduntante, possivelmente sera removido
+        if (!empty($fotoDIR)) {
+            handleFileDeletion($fotoDIR,$targetDir);
         }
+        
+        $foto = handleImageUpload($_FILES['fotoImagem'], $targetDir, maxSize, maxWidth, maxHeight, allowedTypes,'fotoImagem');
+        updateField($conn,"projecto","img",$foto,"nome",$nomeActual); 
+
     }
+    if(isset($_FILES['planta']) && !empty($_FILES['planta']['name'])){ 
+        //get file name from DB
+        $sql = "SELECT planta FROM projecto WHERE nome = '$nomeActual' ";
+
+        $result = $conn->query($sql);
+
+        // Fetch the row data as an associative array
+        $row = $result->fetch_assoc();
+                        
+        // Process of unlinking
+        $targetDir = "assets/projectos/";
+        $fotoDIR = $row['planta'];
+
+        //Verificacao reduntante, possivelmente sera removido
+        if (!empty($fotoDIR)) {
+            handleFileDeletion($fotoDIR,$targetDir);
+        }
+        
+        $foto = handleImageUpload($_FILES['planta'], $targetDir, maxSize, maxWidth, maxHeight, allowedTypes,'planta');
+        updateField($conn,"projecto","planta",$foto,"nome",$nomeActual); 
+
+    }
+
 
     header("Location: gestao.php");
 }
 }catch (\Throwable $th) {
     $msg =  " " . $th->getMessage();;
     phpAlert($msg);
-    echo"<td width=14% align=center><input type=button value=Voltar onclick=myselect() /></td>";
+    header("Location: gestao.php");
+    exit();
 }
 
 //Apagar projecto 
 try{
-    if ($value =='submitApagar') { 
-        $id = preg_replace('/ - .*/', '', $_POST['id']);
+    if ($value =='submitApagar') {
         
-        $stmt = $conn->prepare("DELETE FROM projecto WHERE id = ? ");
+        $csrfToken = $_POST['csrf_tokenDelete'];
+
+        if (!verifyCsrfTokenDelete($csrfToken)) {
+            throw new Exception("Invalid CSRF token.", 1);
+    
+        }
+    
+        $id = $_POST['id'];
+        
+        $stmt = $conn->prepare("DELETE FROM projecto WHERE nome = ? ");
         $stmt->bind_param("s", $id);
 
         $path = './assets/DB/';
 
             //Apagar foto no ficheiro DB
-            $sql = "SELECT img FROM projecto WHERE id = '$id' ";
+            $sql = "SELECT img FROM projecto WHERE nome = '$id' ";
             $result = ($conn->query($sql));
             //declare array to store the data of database
             $row = []; 
@@ -343,14 +391,22 @@ try{
 } catch (\Throwable $th) {
     $msg =  " " . $th->getMessage();;
     phpAlert($msg);
-    echo"<td width=14% align=center><input type=button value=Voltar onclick=myselect() /></td>";
+    header("Location: gestao.php");
+    exit();
 }
 
 //Apagar uma das imagens do projecto 
 try{
     if ($value =='imagemApagar') {
-         
-        $nome = preg_replace('/ - .*/', '', $_POST['id']);
+
+        $csrfToken = $_POST['csrf_tokenDeleteImage'];
+
+        if (!verifyCsrfTokenDeleteImage($csrfToken)) {
+            throw new Exception("Invalid CSRF token.", 1);
+    
+        }
+
+        $nome = $_POST['id'];
         $stmt = $conn->prepare("DELETE FROM imagens WHERE id = ? ");
         $stmt->bind_param("s", $nome);
 
@@ -382,7 +438,8 @@ try{
 } catch (\Throwable $th) {
     $msg =  " " . $th->getMessage();;
     phpAlert($msg);
-    echo"<td width=14% align=center><input type=button value=Voltar onclick=myselect() /></td>";
+    header("Location: gestao.php");
+    exit();
 }
 ?>
     <script>
